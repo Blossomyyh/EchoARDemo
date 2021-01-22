@@ -16,6 +16,7 @@ to choose their favourite pets.
 6. Go to the ViewController.swift file, add the entry id's for 3d content
 7. Connect iPhone to your computer.
 8. Press the play button to build an run (Note: your device must be unlocked to run)
+9. Use postman to get `entryId` for each model
 
 ## Using The Demo
 1. Move your phone around a horizontal surface to scan a plane.
