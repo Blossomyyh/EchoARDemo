@@ -119,9 +119,56 @@ class ViewController: UIViewController, ARSCNViewDelegate {
             
         })
         
+        //create and add a recognizer to respond to finger pinchs on the scene view
+        let pinchRecognizer = UIPinchGestureRecognizer(target: self, action: #selector(handlePinch(pinchRecognizer:)))
+        sceneView.addGestureRecognizer(pinchRecognizer)
+
         
         
     }
+    
+    
+    //handlePinch(panGesture:) - takes a UIPinchGestureRecognizer as an argument
+    //called whenever a user does a two finger pinch
+    //calls the doScale method
+    @objc func handlePinch(pinchRecognizer: UIPinchGestureRecognizer){
+        //call do scale to scale node on user pinch gesture
+        doScale(recognizer: pinchRecognizer)
+    }
+
+    //doScale(recognizer:) - takes a UIPinchGestureRecognizer as an argument
+    //scales a node to the sceneView based on the state of the gesture recognizer
+    func doScale(recognizer: UIPinchGestureRecognizer){
+        //get the location of the pinch
+        let location = recognizer.location(in: sceneView)
+        
+        //get the node touched by pinch
+        guard let hitNodeResult = sceneView.hitTest(location, options: nil).first else {return}
+        if(isPlane(node: hitNodeResult.node)){
+            return
+        }
+        //if the pinch has begun, or continues
+        if recognizer.state == .began || recognizer.state == .changed {
+            //scale the touched node
+            let action = SCNAction.scale(by: recognizer.scale, duration: 0.3)
+            hitNodeResult.node.runAction(action)
+            recognizer.scale = 1.0
+        }
+    }
+    
+    
+    //isPlane(node:): takes an SCNNode as an argument
+    //returns true if the node is named "plain" otherwise returns false
+    func isPlane(node: SCNNode) -> Bool {
+        guard  let name = node.name else {
+            return false
+        }
+        if name == "plain"{
+            return true
+        }
+        return false
+    }
+    
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         

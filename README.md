@@ -17,6 +17,7 @@ to choose their favourite pets.
 7. Connect iPhone to your computer.
 8. Press the play button to build an run (Note: your device must be unlocked to run)
 9. Use postman to get `entryId` for each model
+10. Add `UIPinchGestureRecognizer` to interact with your pet. Like look closer and touch it.
 
 ## Using The Demo
 1. Move your phone around a horizontal surface to scan a plane.
